@@ -1,0 +1,16 @@
+# Gradle
+# ------
+.gradle
+/build
+/buildSrc/build
+/subprojects/*/build
+/subprojects/docs/src/samples/*/*/build
+
+# Eclipse
+# -------
+*.classpath
+*.project
+*.settings
+/bin
+/subprojects/*/bin
+atlassian-ide-plugin.xml
