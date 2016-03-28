@@ -1,4 +1,10 @@
-package com.apexmob.skink;
+package com.apexmob.skink.data;
+
+import com.apexmob.skink.Data;
+import com.apexmob.skink.DataComplete;
+import com.apexmob.skink.DataListener;
+import com.apexmob.skink.DataManager;
+import com.apexmob.skink.ListenerComplete;
 
 public abstract class AbstractDataListener implements DataListener {
 	

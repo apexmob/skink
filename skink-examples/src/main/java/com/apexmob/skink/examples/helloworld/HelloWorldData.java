@@ -5,12 +5,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
-import com.apexmob.skink.AbstractDataListener;
 import com.apexmob.skink.Data;
 import com.apexmob.skink.DataComplete;
 import com.apexmob.skink.DataManager;
 import com.apexmob.skink.DefaultDataManager;
 import com.apexmob.skink.DefaultParser;
+import com.apexmob.skink.data.AbstractDataListener;
 import com.apexmob.skink.listeners.NodeListenerBuilder;
 
 public class HelloWorldData {
