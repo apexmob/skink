@@ -1,3 +1,4 @@
 dependencies {
+    compile project(":skink-parser")
     testCompile 'junit:junit:4.12'
 }
