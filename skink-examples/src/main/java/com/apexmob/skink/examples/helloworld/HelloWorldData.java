@@ -38,6 +38,12 @@ public class HelloWorldData {
 			parser.parse(htmlStream); //tell the parser to go!
 		} catch (IOException e) {
 			e.printStackTrace(); //do something better than this with exceptions
+		} finally {
+			try {
+				htmlStream.close();
+			} catch (IOException e) {
+				//do nothing
+			}
 		}
 		
 		System.out.println(dataListener.title);
