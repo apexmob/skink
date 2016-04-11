@@ -2,7 +2,6 @@ package com.apexmob.skink.listeners;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 
 import java.util.regex.Pattern;
@@ -17,7 +16,6 @@ import com.apexmob.skink.Data;
 import com.apexmob.skink.EndElement;
 import com.apexmob.skink.MockDataEventManager;
 import com.apexmob.skink.MockNodeListener;
-import com.apexmob.skink.MockParser;
 import com.apexmob.skink.NodeListener;
 import com.apexmob.skink.ParsingTest;
 import com.apexmob.skink.StartElement;
@@ -914,19 +912,6 @@ public class NodeListenerBuilderTest extends ParsingTest {
 		listener.onStartElement(buildStartElement("<div>"));
 		listener.onText(buildText("test"));
 		listener.onEndElement(buildEndElement("</div>"));
-	}
-	
-	@Test
-	public void insertEndElementInsertsElement() {
-		MockParser parser = new MockParser();
-		
-		NodeListener listener = NodeListenerBuilder.builder()
-			.insertEndTag(parser)
-			.build();
-		
-		listener.onStartElement(buildStartElement("<div>"));
-		
-		assertEquals("</div>", parser.getEndElement().getContent());
 	}
 	
 	@Test

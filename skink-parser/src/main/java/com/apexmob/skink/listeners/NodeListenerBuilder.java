@@ -153,11 +153,6 @@ public class NodeListenerBuilder {
 		return this;
 	}
 	
-	public NodeListenerBuilder insertEndTag(Parser parser) {
-		addListener(new InsertEndTagListener(parser));
-		return this;
-	}
-	
 	public NodeListenerBuilder forceTagsClosed(String[] tagNames) {
 		if (tagNames == null) {
 			throw new IllegalArgumentException("The array of tag names provided is null");
