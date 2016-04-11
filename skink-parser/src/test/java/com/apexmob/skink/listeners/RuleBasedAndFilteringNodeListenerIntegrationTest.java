@@ -58,7 +58,7 @@ public class RuleBasedAndFilteringNodeListenerIntegrationTest {
 
 	@Test
 	public void test() throws IOException {
-		parser.getNodeManager().registerListener(listener2);
+		parser.registerListener(listener2);
 		
 		listener1.addTagRule(new IncludeTagWithNameFilterRule("span"));
 		listener1.addTagRule(new IncludeTagWithAttributeFilterRule("id", "test"));

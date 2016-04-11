@@ -18,7 +18,7 @@ public class HelloWorldNode {
 		InputStream htmlStream = new ByteArrayInputStream(html.getBytes(StandardCharsets.UTF_8));
 		
 		Parser parser = new DefaultParser();
-		parser.getNodeManager().registerListener( 
+		parser.registerListener( 
 				NodeListenerBuilder.builder() //build the listener tree that will process node events
 				.filterToAllTagsWithName("h1") //filter to just the "h1" element
 				.addListener(new AbstractNodeListener() { //listen for the elements that make it past the filter

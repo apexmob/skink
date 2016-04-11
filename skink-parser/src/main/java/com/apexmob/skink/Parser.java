@@ -3,16 +3,28 @@ package com.apexmob.skink;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * A component that parses HTML files and issues SAX-style events for element and text nodes.
+ */
 public interface Parser {
 	
-	public NodeManager getNodeManager();
-	
+	/**
+	 * Parse the contents of the provided input stream.
+	 * @param in The input stream to  parse.
+	 * @throws IOException if an exception occurs during reading of the stream.
+	 */
 	public void parse(InputStream in) throws IOException;
 	
-	public void insert(StartElement start);
+	/**
+	 * Register a new listener to start receiving node events.
+	 * @param listener The listener that will receive the events. 
+	 */
+	public void registerListener(NodeListener listener);
 	
-	public void insert(EndElement end);
-	
-	public void insert(Text text);
+	/**
+	 * De-register a listener from receiving node events.
+	 * @param listener The listener that will no longer receive the events. 
+	 */
+	public void deregisterListener(NodeListener listener);
 
 }

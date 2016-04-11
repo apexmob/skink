@@ -66,7 +66,7 @@ public class SingleTagClosingListenerTest extends ParsingTest {
 		SingleTagClosingListener listener = new SingleTagClosingListener(mock);
 		listener.addTag("meta");
 		
-		parser.getNodeManager().registerListener(listener);
+		parser.registerListener(listener);
 		parse(content);
 		
 		assertStartElement(mock, 0, "div");
@@ -88,7 +88,7 @@ public class SingleTagClosingListenerTest extends ParsingTest {
 		listener.addListener(mock);
 		listener.addTag("meta");
 		
-		parser.getNodeManager().registerListener(listener);
+		parser.registerListener(listener);
 		parse(content);
 		
 		assertStartElement(mock, 0, "div");
@@ -112,7 +112,7 @@ public class SingleTagClosingListenerTest extends ParsingTest {
 		SingleTagClosingListener listener = new SingleTagClosingListener(listeners);
 		listener.addTag("meta");
 		
-		parser.getNodeManager().registerListener(listener);
+		parser.registerListener(listener);
 		parse(content);
 		
 		assertStartElement(mock, 0, "div");
@@ -133,7 +133,7 @@ public class SingleTagClosingListenerTest extends ParsingTest {
 		SingleTagClosingListener listener = new SingleTagClosingListener(mock);
 		listener.addTag("meta");
 		
-		parser.getNodeManager().registerListener(listener);
+		parser.registerListener(listener);
 		parse(content);
 		
 		assertStartElement(mock, 0, "span");
@@ -160,7 +160,7 @@ public class SingleTagClosingListenerTest extends ParsingTest {
 		listener.addTag("meta");
 		listener.addTag("span");
 		
-		parser.getNodeManager().registerListener(listener);
+		parser.registerListener(listener);
 		parse(content);
 		
 		assertStartElement(mock, 0, "div");
@@ -187,7 +187,7 @@ public class SingleTagClosingListenerTest extends ParsingTest {
 		SingleTagClosingListener listener = new SingleTagClosingListener(mock);
 		listener.addTag("meta");
 		
-		parser.getNodeManager().registerListener(listener);
+		parser.registerListener(listener);
 		parse(content);
 		
 		assertStartElement(mock, 0, "div");
@@ -210,7 +210,7 @@ public class SingleTagClosingListenerTest extends ParsingTest {
 		SingleTagClosingListener listener = new SingleTagClosingListener(mock);
 		listener.addTag("meta");
 		
-		parser.getNodeManager().registerListener(listener);
+		parser.registerListener(listener);
 		parse(content);
 		
 		assertStartElement(mock, 0, "div");

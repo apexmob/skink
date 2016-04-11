@@ -25,7 +25,7 @@ public class HelloWorldData {
 		dataManager.registerListener(dataListener); //register our DataListener with the DataManager to listen for data events
 		
 		DefaultParser parser = new DefaultParser();
-		parser.getNodeManager().registerListener(
+		parser.registerListener(
 				NodeListenerBuilder.builder() //build the listener tree that will process node events
 				.setDataEventManager(dataManager) //set the DataManager into the builder so it can register built-in DataListeners for you
 				.filterToAllTagsWithName("h1") //filter to just the "h1" element

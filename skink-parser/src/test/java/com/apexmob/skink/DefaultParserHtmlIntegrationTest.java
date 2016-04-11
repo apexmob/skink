@@ -37,14 +37,14 @@ public class DefaultParserHtmlIntegrationTest {
 		dataMgr.registerListener(dataListener);
 		
 		Parser parser = getParser();
-		parser.getNodeManager().registerListener(
+		parser.registerListener(
 				NodeListenerBuilder.builder()
 				.setDataEventManager(dataMgr)
 				.filterToAllTagsWithName("title")
 				.readText(1)
 				.build());
 		
-		parser.getNodeManager().registerListener(
+		parser.registerListener(
 				NodeListenerBuilder.builder()
 				.setDataEventManager(dataMgr)
 				.filterToAllTagsWithName("div")

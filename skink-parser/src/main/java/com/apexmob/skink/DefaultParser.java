@@ -168,4 +168,14 @@ public class DefaultParser implements Parser, DataListener {
 		insertedNodesPresent = false;
 	}
 
+	@Override
+	public void registerListener(NodeListener listener) {
+		getNodeManager().registerListener(listener);
+	}
+
+	@Override
+	public void deregisterListener(NodeListener listener) {
+		getNodeManager().deregisterListener(listener);
+	}
+
 }
