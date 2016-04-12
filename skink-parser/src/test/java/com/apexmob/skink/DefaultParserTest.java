@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
 import org.junit.After;
@@ -50,6 +51,59 @@ public class DefaultParserTest extends ParsingTest {
 		thrown.expect(IllegalArgumentException.class);
 		
 		parser.onListenerComplete(null);
+	}
+	
+	@Test
+	public void parseInputStreamThrowsIllegalArgumentExceptionWhenInputStreamIsNull() throws IOException {
+		thrown.expect(IllegalArgumentException.class);
+		
+		parser.parse(null);
+	}
+	
+	@Test
+	public void parseInputStreamCharSetThrowsIllegalArgumentExceptionWhenInputStreamIsNull() throws IOException {
+		thrown.expect(IllegalArgumentException.class);
+		
+		parser.parse(null, Charset.defaultCharset());
+	}
+	
+	@Test
+	public void parseInputStreamCharSetThrowsIllegalArgumentExceptionWhenCharsetIsNull() throws IOException {
+		thrown.expect(IllegalArgumentException.class);
+		
+		parser.parse(buildInputStream("<div>"), null);
+	}
+	
+	@Test
+	public void parseUsesTheDefaultCharacterSet() throws IOException {
+		DefaultParser parser = new DefaultParser();
+		
+		InputStream inStr = new ByteArrayInputStream("<div></div>".getBytes(Charset.defaultCharset()));
+		
+		MockNodeListener listener = new MockNodeListener();
+		parser.registerListener(listener);
+		
+		parser.parse(inStr);
+		
+		assertEquals(2, listener.getNodeStack().size());
+		assertStartElement(listener, 0, "div");
+		assertEndElement(listener, 1, "div");
+	}
+	
+	@Test
+	public void parseInputStreamCharsetUsesTheProvidedCharset() throws IOException {
+		DefaultParser parser = new DefaultParser();
+		
+		InputStream inStr = new ByteArrayInputStream("<div></div>".getBytes(StandardCharsets.UTF_16LE));
+		
+		MockNodeListener listener = new MockNodeListener();
+		parser.registerListener(listener);
+		
+		parser.parse(inStr, StandardCharsets.UTF_16LE);
+		
+		assertEquals(2, listener.getNodeStack().size());
+		assertStartElement(listener, 0, "div");
+		assertEndElement(listener, 1, "div");
 	}
 	
 	@Test

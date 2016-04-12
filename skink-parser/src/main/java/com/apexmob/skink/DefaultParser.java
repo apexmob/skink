@@ -65,7 +65,12 @@ public class DefaultParser implements Parser, DataListener {
 		this.parse(in, Charset.defaultCharset());
 	}
 	
-	private void parse(InputStream in, Charset charSet) throws IOException {
+	/**
+	 * @inheritDoc
+	 * @throws IllegalArgumentException if the input stream provided is null.
+	 * @throws IllegalArgumentException if the character set provided is null.
+	 */
+	public void parse(InputStream in, Charset charSet) throws IOException {
 		if (in == null) {
 			throw new IllegalArgumentException("The input stream provided is null");
 		}
