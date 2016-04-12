@@ -13,6 +13,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import com.apexmob.skink.listeners.AbstractNodeListener;
+
 public class DefaultParserTest extends ParsingTest {
 	
 	@Rule
@@ -41,27 +43,6 @@ public class DefaultParserTest extends ParsingTest {
 		thrown.expect(IllegalArgumentException.class);
 		
 		new DefaultParser(null);
-	}
-	
-	@Test
-	public void insertStartElementThrowsIllegalArgumentExceptionWhenStartIsNull() {
-		thrown.expect(IllegalArgumentException.class);
-		
-		parser.insert((StartElement) null);
-	}
-	
-	@Test
-	public void insertEndElementThrowsIllegalArgumentExceptionWhenEndIsNull() {
-		thrown.expect(IllegalArgumentException.class);
-		
-		parser.insert((EndElement) null);
-	}
-	
-	@Test
-	public void insertTextThrowsIllegalArgumentExceptionWhenTextIsNull() {
-		thrown.expect(IllegalArgumentException.class);
-		
-		parser.insert((Text) null);
 	}
 	
 	@Test
@@ -168,163 +149,12 @@ public class DefaultParserTest extends ParsingTest {
 	}
 	
 	@Test
-	public void parserInsertsStartElements() throws IOException {
-		final DefaultParser parser = new DefaultParser();
-		
-		MockNodeListener listener = new MockNodeListener();
-		parser.getNodeManager().registerListener(listener);
-		
-		parser.getNodeManager().registerListener(new NodeListener() {
-			
-			public void onText(Text text) { }
-			
-			public void onStartElement(StartElement start) {
-				if ("div".equals(start.getName())) {
-					parser.insert(new StartElement(new StringBuilder("<span>")));
-				}
-			}
-			
-			public void onEndElement(EndElement end) { }
-		});
-		
-		
-		
-		parse(parser, "<div></div>");
-		
-		assertStartElement(listener, 0, "div");
-		assertStartElement(listener, 1, "span");
-		assertEndElement(listener, 2, "div");
-	}
-	
-	@Test
-	public void parserInsertsEndElements() throws IOException {
-		final DefaultParser parser = new DefaultParser();
-		
-		MockNodeListener listener = new MockNodeListener();
-		parser.getNodeManager().registerListener(listener);
-		
-		parser.getNodeManager().registerListener(new NodeListener() {
-			
-			public void onText(Text text) { }
-			
-			public void onStartElement(StartElement start) {
-				if ("div".equals(start.getName())) {
-					parser.insert(new EndElement(new StringBuilder("</span>")));
-				}
-			}
-			
-			public void onEndElement(EndElement end) { }
-		});
-		
-		parse(parser, "<div></div>");
-		
-		assertStartElement(listener, 0, "div");
-		assertEndElement(listener, 1, "span");
-		assertEndElement(listener, 2, "div");
-	}
-	
-	@Test
-	public void parserInsertsText() throws IOException {
-		final DefaultParser parser = new DefaultParser();
-		
-		MockNodeListener listener = new MockNodeListener();
-		parser.getNodeManager().registerListener(listener);
-		
-		parser.getNodeManager().registerListener(new NodeListener() {
-			
-			public void onText(Text text) { }
-			
-			public void onStartElement(StartElement start) {
-				if ("div".equals(start.getName())) {
-					parser.insert(new Text(new StringBuilder("test")));
-				}
-			}
-			
-			public void onEndElement(EndElement end) { }
-		});
-		
-		parse(parser, "<div></div>");
-		
-		assertStartElement(listener, 0, "div");
-		assertText(listener, 1, "test");
-		assertEndElement(listener, 2, "div");
-	}
-	
-	@Test
-	public void parserInsertsAllNodes() throws IOException {
-		final DefaultParser parser = new DefaultParser();
-		
-		MockNodeListener listener = new MockNodeListener();
-		parser.getNodeManager().registerListener(listener);
-		
-		parser.getNodeManager().registerListener(new NodeListener() {
-			
-			public void onText(Text text) { }
-			
-			public void onStartElement(StartElement start) {
-				if ("div".equals(start.getName())) {
-					parser.insert(new StartElement(new StringBuilder("<span>")));
-					parser.insert(new Text(new StringBuilder("test")));
-					parser.insert(new EndElement(new StringBuilder("</span>")));
-				}
-			}
-			
-			public void onEndElement(EndElement end) { }
-		});
-		
-		parse(parser, "<div></div>");
-		
-		assertStartElement(listener, 0, "div");
-		assertStartElement(listener, 1, "span");
-		assertText(listener, 2, "test");
-		assertEndElement(listener, 3, "span");
-		assertEndElement(listener, 4, "div");
-	}
-	
-	@Test
-	public void parserInsertsNodesInMultiplePlaces() throws IOException {
-		final DefaultParser parser = new DefaultParser();
-		
-		MockNodeListener listener = new MockNodeListener();
-		parser.getNodeManager().registerListener(listener);
-		
-		parser.getNodeManager().registerListener(new NodeListener() {
-			
-			public void onText(Text text) { }
-			
-			public void onStartElement(StartElement start) {
-				if ("div".equals(start.getName())) {
-					parser.insert(new StartElement(new StringBuilder("<span>")));
-					parser.insert(new Text(new StringBuilder("test")));
-					parser.insert(new EndElement(new StringBuilder("</span>")));
-				}
-			}
-			
-			public void onEndElement(EndElement end) { }
-		});
-		
-		parse(parser, "<div></div><div></div>");
-		
-		assertStartElement(listener, 0, "div");
-		assertStartElement(listener, 1, "span");
-		assertText(listener, 2, "test");
-		assertEndElement(listener, 3, "span");
-		assertEndElement(listener, 4, "div");
-		
-		assertStartElement(listener, 5, "div");
-		assertStartElement(listener, 6, "span");
-		assertText(listener, 7, "test");
-		assertEndElement(listener, 8, "span");
-		assertEndElement(listener, 9, "div");
-	}
-	
-	@Test
 	public void dataReadEventsDoNotAlterFunctionalty() throws IOException {
 		final DefaultDataManager evtMgr = new DefaultDataManager();
 		
 		evtMgr.registerListener(parser);
 		
-		parser.getNodeManager().registerListener(new NodeListener() {
+		parser.registerListener(new NodeListener() {
 			
 			public void onText(Text text) { }
 			
@@ -349,13 +179,13 @@ public class DefaultParserTest extends ParsingTest {
 		final DefaultParser parser = new DefaultParser();
 		
 		MockNodeListener listener = new MockNodeListener();
-		parser.getNodeManager().registerListener(listener);
+		parser.registerListener(listener);
 		
 		final DefaultDataManager evtMgr = new DefaultDataManager();
 		
 		evtMgr.registerListener(parser);
 		
-		parser.getNodeManager().registerListener(new NodeListener() {
+		parser.registerListener(new NodeListener() {
 			
 			public void onText(Text text) { }
 			
@@ -379,7 +209,7 @@ public class DefaultParserTest extends ParsingTest {
 		final DefaultParser parser = new DefaultParser();
 		
 		MockNodeListener listener = new MockNodeListener();
-		parser.getNodeManager().registerListener(listener);
+		parser.registerListener(listener);
 		
 		DefaultDataManager evtMgr = new DefaultDataManager();
 		
@@ -390,6 +220,39 @@ public class DefaultParserTest extends ParsingTest {
 		parse(parser, "<div></div>");
 		
 		assertEquals(0, listener.getNodeStack().size());
+	}
+	
+	@Test
+	public void deregisteredListenersReceiveNoEvents() throws IOException {
+		final DefaultParser parser = new DefaultParser();
+		
+		MockNodeListener listener = new MockNodeListener();
+		parser.registerListener(listener);
+		parser.deregisterListener(listener);
+		
+		parse(parser, "<div></div>");
+		
+		assertEquals(0, listener.getNodeStack().size());
+	}
+	
+	@Test
+	public void listenersCanBeDeRegisteredMidParsing() throws IOException {
+		final DefaultParser parser = new DefaultParser();
+		
+		final MockNodeListener listener = new MockNodeListener();
+		parser.registerListener(listener);
+		parser.registerListener(new AbstractNodeListener() {
+		
+			@Override
+			public void onStartElement(StartElement start) {
+				parser.deregisterListener(listener);
+			}
+		});
+		
+		parse(parser, "<div></div>");
+		
+		assertEquals(1, listener.getNodeStack().size());
+		assertStartElement(listener, 0, "div");
 	}
 	
 	private InputStream buildInputStream(String str) {

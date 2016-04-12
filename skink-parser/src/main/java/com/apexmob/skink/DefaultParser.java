@@ -4,10 +4,12 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
+import java.nio.charset.Charset;
 
+/**
+ * The DefaultParser is the default implementation of the Parser interface.  It also implements
+ * the DataListener interface so that it can listen for DataComplete events.
+ */
 public class DefaultParser implements Parser, DataListener {
 	
 	//TODO parse comments or other non xml tag structures
@@ -28,13 +30,18 @@ public class DefaultParser implements Parser, DataListener {
 
 	private final NodeManager nodeManager;
 	
-	private boolean insertedNodesPresent = false;
-	private List<Node> insertedNodes = new ArrayList<Node>();
-	
+	/**
+	 * Construct a new DefaultParser with a DefaultNodeManager.
+	 */
 	public DefaultParser() {
 		this(new DefaultNodeManager());
 	}
 	
+	/**
+	 * Construct a new DefaultParser with the provided NodeManager.
+	 * @param nodeManager The NodeManager to use within the parser.
+	 * @throws IllegalArgumentException if the node manager provided is null.
+	 */
 	public DefaultParser(NodeManager nodeManager) {
 		if (nodeManager == null) {
 			throw new IllegalArgumentException("The NodeManager provided is null");
@@ -42,27 +49,45 @@ public class DefaultParser implements Parser, DataListener {
 		this.nodeManager = nodeManager;
 	}
 	
-	public NodeManager getNodeManager() {
+	/**
+	 * Retrieve the NodeManager used within the parser.
+	 * @return The NodeManager.
+	 */
+	private NodeManager getNodeManager() {
 		return nodeManager;
 	}
 	
-	//TODO move Charset to input parameter
+	/**
+	 * @inheritDoc
+	 * @throws IllegalArgumentException if the input stream provided is null.
+	 */
 	public void parse(InputStream in) throws IOException {
-		BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8));
+		this.parse(in, Charset.defaultCharset());
+	}
+	
+	private void parse(InputStream in, Charset charSet) throws IOException {
+		if (in == null) {
+			throw new IllegalArgumentException("The input stream provided is null");
+		}
+		if (charSet == null) {
+			throw new IllegalArgumentException("The character set provided is null");
+		}
+		BufferedReader reader = new BufferedReader(new InputStreamReader(in, charSet));
 		
 		int ch;
 		while ((ch = reader.read()) != -1) {
 			if (isReadCompleted) {
 				break;
 			}
-			readCharacter((char) ch);
-			if (insertedNodesPresent) {
-				playInsertedNodes();
-			}
+			updateParseStateForCharacter((char) ch);
 		}
 	}
 	
-	private void readCharacter(char ch) {
+	/**
+	 * Update the state based on the provided character
+	 * @param ch The next character.
+	 */
+	private void updateParseStateForCharacter(char ch) {
 		if (isElementStarted) {
 			nodeBuffer.append(ch);
 			if (ch == '>' && !isInAttribute) {
@@ -108,71 +133,45 @@ public class DefaultParser implements Parser, DataListener {
 		lastCharacter = ch;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void onData(Data evt) {
 		//do nothing
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * Stops parsing when received.
+	 */
 	public void onDataComplete(DataComplete evt) {
 		isReadCompleted = true;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * De-registers listener when received.
+	 */
 	public void onListenerComplete(ListenerComplete evt) {
 		if (evt == null) {
 			throw new IllegalArgumentException("The event provided is null");
 		}
 		getNodeManager().deregisterListener(evt.getListener());
 	}
-	
-	public void insert(EndElement end) {
-		if (end == null) {
-			throw new IllegalArgumentException("The end element provided is null");
-		}
-		insertedNodesPresent = true;
-		insertedNodes.add(end);
-	}
-	
-	public void insert(StartElement start) {
-		if (start == null) {
-			throw new IllegalArgumentException("The start element provided is null");
-		}
-		insertedNodesPresent = true;
-		insertedNodes.add(start);
-	}
-	
-	public void insert(Text text) {
-		if (text == null) {
-			throw new IllegalArgumentException("The text provided is null");
-		}
-		insertedNodesPresent = true;
-		insertedNodes.add(text);
-	}
-	
-	private void playInsertedNodes() {
-		Node node = null;
-		for (int i=0; i < insertedNodes.size(); i++) {
-			node = insertedNodes.get(i);
-			switch (node.getType()) {
-			case END_ELEMENT:
-				nodeManager.endElement((EndElement) node);
-				break;
-			case START_ELEMENT:
-				nodeManager.startElement((StartElement) node);
-				break;
-			case TEXT:
-				nodeManager.text((Text) node);
-				break;
-			}
-		}
-		
-		insertedNodes.clear();
-		insertedNodesPresent = false;
-	}
 
+	/**
+	 * {@inheritDoc}
+	 * @throws IllegalArgumentException if the listener provided is null.
+	 */
 	@Override
 	public void registerListener(NodeListener listener) {
 		getNodeManager().registerListener(listener);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * @throws IllegalArgumentException if the listener provided is null.
+	 */
 	@Override
 	public void deregisterListener(NodeListener listener) {
 		getNodeManager().deregisterListener(listener);
