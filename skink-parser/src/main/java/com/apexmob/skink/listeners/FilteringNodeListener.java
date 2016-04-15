@@ -109,7 +109,7 @@ public abstract class FilteringNodeListener extends NodeListenerWrapper {
 	 * @param start The node event.
 	 */
 	private void processStartTag(StartElement start) {
-		if (policy == PropagationPolicy.All || policy == PropagationPolicy.TagsOnly) {
+		if (policy == PropagationPolicy.All || policy == PropagationPolicy.ElementsOnly) {
 			super.onStartElement(start);
 		} else {
 			//policy == PropagationPolicy.ParentTagOnly
@@ -126,7 +126,7 @@ public abstract class FilteringNodeListener extends NodeListenerWrapper {
 	 * @param end The node event.
 	 */
 	private void processEndTag(EndElement end) {
-		if (policy == PropagationPolicy.All || policy == PropagationPolicy.TagsOnly) {
+		if (policy == PropagationPolicy.All || policy == PropagationPolicy.ElementsOnly) {
 			super.onEndElement(end);
 		} else {
 			//policy == PropagationPolicy.ParentTagOnly

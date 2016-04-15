@@ -12,13 +12,13 @@ public enum PropagationPolicy {
 	All,
 	
 	/**
-	 * Include only tags.
+	 * Include only elements.
 	 */
-	TagsOnly,
+	ElementsOnly,
 	
 	/**
-	 * Include only the parent tags.
+	 * Include only the parent start and end elements and no child elements.
 	 */
-	ParentTagOnly;
+	ParentElementOnly;
 
 }

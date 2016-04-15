@@ -75,7 +75,7 @@ public class FilteringNodeListenerTest extends ParsingTest {
 	
 	@Test
 	public void testSingleElementIncludeWithOneListener_PolicyTagsOnly() {
-		listener.setPropagationPolicy(PropagationPolicy.TagsOnly);
+		listener.setPropagationPolicy(PropagationPolicy.ElementsOnly);
 		
 		listener.includeElement = true;
 		listener.onStartElement(buildStartElement("<div>"));
@@ -88,7 +88,7 @@ public class FilteringNodeListenerTest extends ParsingTest {
 	
 	@Test
 	public void testSingleElementIncludeWithOneListener_PolicyParentTagOnly() {
-		listener.setPropagationPolicy(PropagationPolicy.ParentTagOnly);
+		listener.setPropagationPolicy(PropagationPolicy.ParentElementOnly);
 		
 		listener.includeElement = true;
 		listener.onStartElement(buildStartElement("<div>"));
@@ -143,7 +143,7 @@ public class FilteringNodeListenerTest extends ParsingTest {
 	
 	@Test
 	public void testMultipleElementsIncludeParentWithOneListener_PolicyTagsOnly() {
-		listener.setPropagationPolicy(PropagationPolicy.TagsOnly);
+		listener.setPropagationPolicy(PropagationPolicy.ElementsOnly);
 		listener.includeElement = true;
 		listener.onStartElement(buildStartElement("<div>"));
 		listener.onText(buildText("one"));
@@ -159,7 +159,7 @@ public class FilteringNodeListenerTest extends ParsingTest {
 	
 	@Test
 	public void testMultipleElementsIncludeParentWithOneListener_PolicyParentTagOnly() {
-		listener.setPropagationPolicy(PropagationPolicy.ParentTagOnly);
+		listener.setPropagationPolicy(PropagationPolicy.ParentElementOnly);
 		listener.includeElement = true;
 		listener.onStartElement(buildStartElement("<div>"));
 		listener.onText(buildText("one"));
@@ -295,8 +295,8 @@ public class FilteringNodeListenerTest extends ParsingTest {
 	
 	@Test
 	public void canGetPropagationPolicy() {
-		listener.setPropagationPolicy(PropagationPolicy.TagsOnly);
-		assertSame(PropagationPolicy.TagsOnly, listener.getPropagationPolicy());
+		listener.setPropagationPolicy(PropagationPolicy.ElementsOnly);
+		assertSame(PropagationPolicy.ElementsOnly, listener.getPropagationPolicy());
 	}
 	
 	@Test
@@ -305,7 +305,7 @@ public class FilteringNodeListenerTest extends ParsingTest {
 		
 		listener.onStartElement(buildStartElement("<div>"));
 		
-		listener.setPropagationPolicy(PropagationPolicy.ParentTagOnly);
+		listener.setPropagationPolicy(PropagationPolicy.ParentElementOnly);
 		
 		listener.onEndElement(buildEndElement("</div>"));
 	}
@@ -314,7 +314,7 @@ public class FilteringNodeListenerTest extends ParsingTest {
 	public void throwsIllegalStateExceptionWhenEndElementNameDoesNotMatchStartElementName() {
 		thrown.expect(IllegalStateException.class);
 		
-		listener.setPropagationPolicy(PropagationPolicy.ParentTagOnly);
+		listener.setPropagationPolicy(PropagationPolicy.ParentElementOnly);
 		listener.onStartElement(buildStartElement("<div>"));
 		listener.onEndElement(buildEndElement("</span>"));
 	}

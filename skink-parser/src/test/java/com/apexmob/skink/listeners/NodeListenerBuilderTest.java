@@ -985,7 +985,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	@Test
 	public void setPropagationPolicyAltersPropagation() {
 		NodeListener listener = NodeListenerBuilder.builder()
-			.setPropagationPolicy(PropagationPolicy.TagsOnly)
+			.setPropagationPolicy(PropagationPolicy.ElementsOnly)
 			.addListener(mock1)
 			.build();
 		
