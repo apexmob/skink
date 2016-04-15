@@ -1,6 +1,7 @@
 package com.apexmob.skink;
 
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Date;
 
@@ -126,8 +127,10 @@ public class Data {
 		Short retVal = null;
 		
 		try {
-			retVal = new Short(getData());
-		} catch (NumberFormatException e) {
+			NumberFormat format = NumberFormat.getNumberInstance();
+			Number number = format.parse(getData());
+			retVal = new Short(number.shortValue());
+		} catch (NumberFormatException | ParseException e) {
 			logger.error("Unable to parse Short from data=" + getData(), e);
 		}
 		
@@ -142,8 +145,10 @@ public class Data {
 		Integer retVal = null;
 		
 		try {
-			retVal = new Integer(getData());
-		} catch (NumberFormatException e) {
+			NumberFormat format = NumberFormat.getNumberInstance();
+			Number number = format.parse(getData());
+			retVal = new Integer(number.intValue());
+		} catch (NumberFormatException | ParseException e) {
 			logger.error("Unable to parse Integer from data=" + getData(), e);
 		}
 		
@@ -158,8 +163,10 @@ public class Data {
 		Long retVal = null;
 		
 		try {
-			retVal = new Long(getData());
-		} catch (NumberFormatException e) {
+			NumberFormat format = NumberFormat.getNumberInstance();
+			Number number = format.parse(getData());
+			retVal = new Long(number.longValue());
+		} catch (NumberFormatException | ParseException e) {
 			logger.error("Unable to parse Long from data=" + getData(), e);
 		}
 		
@@ -174,8 +181,10 @@ public class Data {
 		Float retVal = null;
 		
 		try {
-			retVal = new Float(getData());
-		} catch (NumberFormatException e) {
+			NumberFormat format = NumberFormat.getNumberInstance();
+			Number number = format.parse(getData());
+			retVal = new Float(number.floatValue());
+		} catch (NumberFormatException | ParseException e) {
 			logger.error("Unable to parse Float from data=" + getData(), e);
 		}
 		
@@ -190,8 +199,10 @@ public class Data {
 		Double retVal = null;
 		
 		try {
-			retVal = new Double(getData());
-		} catch (NumberFormatException e) {
+			NumberFormat format = NumberFormat.getNumberInstance();
+			Number number = format.parse(getData());
+			retVal = new Double(number.doubleValue());
+		} catch (NumberFormatException | ParseException e) {
 			logger.error("Unable to parse Double from data=" + getData(), e);
 		}
 		
