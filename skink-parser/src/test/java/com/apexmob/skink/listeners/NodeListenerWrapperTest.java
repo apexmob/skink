@@ -1,13 +1,15 @@
 package com.apexmob.skink.listeners;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import com.apexmob.skink.MockNodeListener;
 import com.apexmob.skink.NodeListener;
@@ -20,6 +22,9 @@ public class NodeListenerWrapperTest extends ParsingTest {
 	MockNodeListener mock2 = null;
 	NodeListenerWrapper listener = null;
 	NodeListenerWrapper listener2 = null;
+	
+	@Rule
+    public ExpectedException thrown= ExpectedException.none();
 	
 	@Before
 	public void setUp() {
@@ -90,4 +95,37 @@ public class NodeListenerWrapperTest extends ParsingTest {
 		assertEquals(2, mock2.getEndElementCount());
 		assertEquals(0, mock2.getTextCount());
 	}
+	
+	@Test
+	public void removeListenerReturnsFalseWhenNoChangeMade() {
+		assertFalse(listener.removeListener(null));
+		assertFalse(listener.removeListener(mock2));
+	}
+	
+	@Test
+	public void removeListenerReturnsTrueWhenAChangeIsMade() {
+		assertTrue(listener.removeListener(mock1));
+	}
+	
+	@Test
+	public void removeListenerRemovesTheListener() {
+		assertEquals(1, listener.getListeners().size());
+		assertTrue(listener.removeListener(mock1));
+		assertEquals(0, listener.getListeners().size());
+	}
+	
+	@Test
+	public void removeListenerDoesNotRemoveTheListenerWhenNoChangeIsMade() {
+		assertEquals(1, listener.getListeners().size());
+		listener.removeListener(mock2);
+		assertEquals(1, listener.getListeners().size());
+	}
+	
+	@Test
+	public void addListenerThrowsIllegalArgumentExceptionWhenListenerIsNull() {
+		thrown.expect(IllegalArgumentException.class);
+		
+		listener.addListener(null);
+	}
+	
 }
