@@ -58,7 +58,7 @@ public class DefaultParser implements Parser, DataListener {
 	}
 	
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 * @throws IllegalArgumentException if the input stream provided is null.
 	 */
 	public void parse(InputStream in) throws IOException {
@@ -66,7 +66,7 @@ public class DefaultParser implements Parser, DataListener {
 	}
 	
 	/**
-	 * @inheritDoc
+	 * {@inheritDoc}
 	 * @throws IllegalArgumentException if the input stream provided is null.
 	 * @throws IllegalArgumentException if the character set provided is null.
 	 */

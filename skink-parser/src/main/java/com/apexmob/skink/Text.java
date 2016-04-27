@@ -10,7 +10,7 @@ public class Text extends Node {
 	
 	/**
 	 * Construct a new Text containing the content provided within a StringBuilder instance.
-	 * @param content The content represented by the node.
+	 * @param buffer A buffer to contain the content represented by the node.
 	 * @throws IllegalArgumentException if the type or content provided is null.
 	 */
 	public Text(StringBuilder buffer) {

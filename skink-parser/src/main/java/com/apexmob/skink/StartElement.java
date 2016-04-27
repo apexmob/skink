@@ -6,8 +6,10 @@ import java.util.Map;
 /**
  * The StartElement class represents the starting or opening element of an Element within a document tree.  
  * It can accept content of the following forms:
+ * <ul>
  * <li>&lt;element attr1="abc" attr2="def" ...&gt;</li>
  * <li>&lt;element attr1="abc" attr2="def" .../&gt;</li>
+ * </ul>
  * 
  * <p>The StartElement class implements the flyweight pattern where a single instance can be reused by calling
  * the clear method and re-populating the content StringBuilder.</p> 
@@ -20,11 +22,11 @@ public class StartElement extends Element {
 	
 	/**
 	 * Construct a new StartElement containing the content provided within a StringBuilder instance.
-	 * @param content The content represented by the node.
+	 * @param buffer A buffer to contain the content represented by the node.
 	 * @throws IllegalArgumentException if the type or content provided is null.
 	 */
-	public StartElement(StringBuilder content) {
-		super(NodeType.START_ELEMENT, content);
+	public StartElement(StringBuilder buffer) {
+		super(NodeType.START_ELEMENT,  buffer);
 	}
 
 	/**
