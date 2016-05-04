@@ -1,10 +1,21 @@
 apply plugin: 'java'
 apply plugin: 'maven-publish'
+apply plugin: 'maven'
+apply plugin: 'signing'
 
 sourceCompatibility = '1.7'
 
 task sourceJar(type: Jar) {
     from sourceSets.main.allJava
+}
+
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
+
+signing {
+    sign configurations.archives
 }
 
 publishing {
@@ -19,8 +30,61 @@ publishing {
             artifact sourceJar {
                 classifier "sources"
             }
+            
+            artifact javadocJar {
+                classifier "javadoc"
+            }
+            
+            pom.withXml {
+        		asNode().appendNode('name', 'Skink Parser')
+            	asNode().appendNode('description', 'A lightweight, SAX-based HTML parser in Java')
+	        }
         }
     }
+}
+
+uploadArchives {
+  	repositories {
+	    mavenDeployer {
+	      	beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+	
+	      	repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+	        	authentication(userName: ossrhUsername, password: ossrhPassword)
+	      	}
+	
+	      	snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+	        	authentication(userName: ossrhUsername, password: ossrhPassword)
+	      	}
+	
+	      	pom.project {
+	        	name 'Skink Parser'
+	        	packaging 'jar'
+	        	description 'A lightweight, SAX-based HTML parser in Java'
+	        	url 'https://github.com/apexmob/skink'
+	
+	        	scm {
+	          		connection 'scm:git:git@github.com:apexmob/skink.git'
+	          		developerConnection 'scm:git:git@github.com:apexmob/skink.git'
+	          		url 'git@github.com:apexmob/skink.git'
+	        	}
+	
+	        	licenses {
+	          		license {
+	            		name 'The Apache License, Version 2.0'
+	            		url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+	          		}
+	        	}
+	
+	        	developers {
+	          		developer {
+	            		id 'Apexmob'
+	            		name 'Apexmob'
+	            		email 'apexmobility@gmail.com'
+	          		}
+	        	}
+	      	}
+	    }
+  	}
 }
 
 publishing {
