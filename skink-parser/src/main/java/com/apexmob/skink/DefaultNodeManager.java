@@ -6,9 +6,9 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DefaultNodeManager2 implements NodeManager2 {
+public class DefaultNodeManager implements NodeManager {
 	
-	private static final Logger logger = LoggerFactory.getLogger(DefaultNodeManager2.class);
+	private static final Logger logger = LoggerFactory.getLogger(DefaultNodeManager.class);
 	
 	private final List<OnStartElementListener> onStartElementListeners = new LinkedList<>();
 	private final List<OnEndElementListener> onEndElementListeners = new LinkedList<>();

@@ -10,11 +10,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-public abstract class NodeManager2Test extends ParsingTest {
+public abstract class NodeManagerTest extends ParsingTest {
 	
-	protected abstract NodeManager2 buildNodeManager();
+	protected abstract NodeManager buildNodeManager();
 	
-	private NodeManager2 nodeMgr;
+	private NodeManager nodeMgr;
 	private MockNodeListener mockListener;
 	private MockNodeListener mockListener2;
 	

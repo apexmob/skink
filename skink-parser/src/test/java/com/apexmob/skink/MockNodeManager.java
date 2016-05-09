@@ -1,7 +1,7 @@
 package com.apexmob.skink;
 
 
-public class MockNodeManager implements NodeManager2 {
+public class MockNodeManager implements NodeManager {
 	
 	private final MockNodeListener delegate = new MockNodeListener();
 
