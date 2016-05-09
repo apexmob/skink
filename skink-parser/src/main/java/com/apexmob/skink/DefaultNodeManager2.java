@@ -1,13 +1,18 @@
 package com.apexmob.skink;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DefaultNodeManager2 implements NodeManager2 {
 	
-	private final List<OnStartElementListener> onStartElementListeners = new ArrayList<>();
-	private final List<OnEndElementListener> onEndElementListeners = new ArrayList<>();
-	private final List<OnTextListener> onTextListeners = new ArrayList<>();
+	private static final Logger logger = LoggerFactory.getLogger(DefaultNodeManager2.class);
+	
+	private final List<OnStartElementListener> onStartElementListeners = new LinkedList<>();
+	private final List<OnEndElementListener> onEndElementListeners = new LinkedList<>();
+	private final List<OnTextListener> onTextListeners = new LinkedList<>();
 
 	/**
 	 * {@inheritDoc}
@@ -98,7 +103,11 @@ public class DefaultNodeManager2 implements NodeManager2 {
 		}
 		
 		for (OnStartElementListener listener : onStartElementListeners) {
-			listener.onStartElement(start);
+			try {
+				listener.onStartElement(start);
+			} catch (RuntimeException e) {
+				logger.error("An error occurred while processing StartElement=" + start.getContent(), e);
+			}
 		}
 	}
 
@@ -113,7 +122,11 @@ public class DefaultNodeManager2 implements NodeManager2 {
 		}
 		
 		for (OnEndElementListener listener : onEndElementListeners) {
-			listener.onEndElement(end);
+			try {
+				listener.onEndElement(end);
+			} catch (RuntimeException e) {
+				logger.error("An error occurred while processing EndElement=" + end.getContent(), e);
+			}
 		}
 	}
 
@@ -128,7 +141,11 @@ public class DefaultNodeManager2 implements NodeManager2 {
 		}
 		
 		for (OnTextListener listener : onTextListeners) {
-			listener.onText(text);
+			try {
+				listener.onText(text);
+			} catch (RuntimeException e) {
+				logger.error("An error occurred while processing Text=" + text.getContent(), e);
+			}
 		}
 	}
 

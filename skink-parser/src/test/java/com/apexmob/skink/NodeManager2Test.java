@@ -250,6 +250,29 @@ public abstract class NodeManager2Test extends ParsingTest {
 		assertStartElement(mockListener2, 1, "br");
 	}
 	
+	@Test
+	public void onStartElementlistenerThrowingExceptionDoesNotStopStartElementListeners() {
+		nodeMgr.addOnStartElementListener(new ExceptionOnStartElementListener());
+		nodeMgr.addOnStartElementListener(mockListener);
+		
+		nodeMgr.startElement(buildStartElement("<div>"));
+		
+		assertEquals(1, mockListener.getNodeStack().size());
+		assertStartElement(mockListener, 0, "div");
+	}
+	
+	private static class ExceptionOnStartElementListener implements OnStartElementListener {
+
+		public void onStartElement(StartElement start) {
+			throw new RuntimeException();
+		}
+		
+	}
+	
+	
+	
+	
+	
 	//END ELEMENT TESTS
 	@Test
 	public void addOnEndElementListenerThrowsIllegalArgumentExceptionWhenListenerIsNull() {
@@ -463,6 +486,25 @@ public abstract class NodeManager2Test extends ParsingTest {
 		assertEquals(2, mockListener2.getNodeStack().size());
 		assertEndElement(mockListener2, 0, "img");
 		assertEndElement(mockListener2, 1, "br");
+	}
+	
+	@Test
+	public void onEndElementlistenerThrowingExceptionDoesNotStopEndElementListeners() {
+		nodeMgr.addOnEndElementListener(new ExceptionOnEndElementListener());
+		nodeMgr.addOnEndElementListener(mockListener);
+		
+		nodeMgr.endElement(buildEndElement("</div>"));
+		
+		assertEquals(1, mockListener.getNodeStack().size());
+		assertEndElement(mockListener, 0, "div");
+	}
+	
+	private static class ExceptionOnEndElementListener implements OnEndElementListener {
+
+		public void onEndElement(EndElement end) {
+			throw new RuntimeException();
+		}
+		
 	}
 	
 	//TEXT TESTS
@@ -680,4 +722,22 @@ public abstract class NodeManager2Test extends ParsingTest {
 		assertText(mockListener2, 1, "text4");
 	}
 	
+	@Test
+	public void onTextListenerThrowingExceptionDoesNotStopTextListeners() {
+		nodeMgr.addOnTextListener(new ExceptionOnTextListener());
+		nodeMgr.addOnTextListener(mockListener);
+		
+		nodeMgr.text(buildText("text"));
+		
+		assertEquals(1, mockListener.getNodeStack().size());
+		assertText(mockListener, 0, "text");
+	}
+	
+	private static class ExceptionOnTextListener implements OnTextListener {
+
+		public void onText(Text text) {
+			throw new RuntimeException();
+		}
+		
+	}
 }

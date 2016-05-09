@@ -6,7 +6,7 @@ package com.apexmob.skink;
  * listeners to register themselves.  A NodeManager orchestrates the execution of event processing 
  * within the collection of listeners.
  */
-public interface NodeManager2 extends NodeManager {
+public interface NodeManager2 {
 	
 	/**
 	 * Add a listener to start receiving StartElement events.
@@ -65,4 +65,16 @@ public interface NodeManager2 extends NodeManager {
 	 */
 	public void text(Text text);
 
+	
+	/**
+	 * Register a new listener to start receiving node events.
+	 * @param listener The listener that will receive the events. 
+	 */
+	public void registerListener(NodeListener listener);
+	
+	/**
+	 * De-register a listener from receiving node events.
+	 * @param listener The listener that will no longer receive the events. 
+	 */
+	public void deregisterListener(NodeListener listener);
 }

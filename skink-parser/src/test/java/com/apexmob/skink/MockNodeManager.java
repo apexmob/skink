@@ -1,7 +1,7 @@
 package com.apexmob.skink;
 
 
-public class MockNodeManager implements NodeManager {
+public class MockNodeManager implements NodeManager2 {
 	
 	private final MockNodeListener delegate = new MockNodeListener();
 
@@ -11,6 +11,36 @@ public class MockNodeManager implements NodeManager {
 
 	public void deregisterListener(NodeListener listener) {
 		
+	}
+	
+	@Override
+	public void addOnStartElementListener(OnStartElementListener listener) {
+
+	}
+
+	@Override
+	public boolean removeOnStartElementListener(OnStartElementListener listener) {
+		return false;
+	}
+
+	@Override
+	public void addOnEndElementListener(OnEndElementListener listener) {
+		
+	}
+
+	@Override
+	public boolean removeOnEndElementListener(OnEndElementListener listener) {
+		return false;
+	}
+
+	@Override
+	public void addOnTextListener(OnTextListener listener) {
+		
+	}
+
+	@Override
+	public boolean removeOnTextListener(OnTextListener listener) {
+		return false;
 	}
 
 	public void startElement(StartElement start) {

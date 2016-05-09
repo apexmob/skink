@@ -28,13 +28,13 @@ public class DefaultParser implements Parser, DataListener {
 	private EndElement endElement = new EndElement(nodeBuffer);
 	private Text text = new Text(nodeBuffer);
 
-	private final NodeManager nodeManager;
+	private final NodeManager2 nodeManager;
 	
 	/**
 	 * Construct a new DefaultParser with a DefaultNodeManager.
 	 */
 	public DefaultParser() {
-		this(new DefaultNodeManager());
+		this(new DefaultNodeManager2());
 	}
 	
 	/**
@@ -42,7 +42,7 @@ public class DefaultParser implements Parser, DataListener {
 	 * @param nodeManager The NodeManager to use within the parser.
 	 * @throws IllegalArgumentException if the node manager provided is null.
 	 */
-	public DefaultParser(NodeManager nodeManager) {
+	public DefaultParser(NodeManager2 nodeManager) {
 		if (nodeManager == null) {
 			throw new IllegalArgumentException("The NodeManager provided is null");
 		}
@@ -53,7 +53,7 @@ public class DefaultParser implements Parser, DataListener {
 	 * Retrieve the NodeManager used within the parser.
 	 * @return The NodeManager.
 	 */
-	private NodeManager getNodeManager() {
+	private NodeManager2 getNodeManager() {
 		return nodeManager;
 	}
 	
