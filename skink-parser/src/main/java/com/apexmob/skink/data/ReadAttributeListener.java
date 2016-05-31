@@ -2,9 +2,10 @@ package com.apexmob.skink.data;
 
 import com.apexmob.skink.Data;
 import com.apexmob.skink.DataManager;
+import com.apexmob.skink.OnStartElementListener;
 import com.apexmob.skink.StartElement;
 
-public class ReadAttributeListener extends AbstractDataFieldListener {
+public class ReadAttributeListener extends AbstractDataFieldListener implements OnStartElementListener {
 	
 	private final String attributeName;
 	

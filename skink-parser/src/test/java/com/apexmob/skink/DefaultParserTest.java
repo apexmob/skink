@@ -208,17 +208,12 @@ public class DefaultParserTest extends ParsingTest {
 		
 		evtMgr.registerListener(parser);
 		
-		parser.registerListener(new NodeListener() {
-			
-			public void onText(Text text) { }
-			
+		parser.registerListener(new OnStartElementListener() {
 			public void onStartElement(StartElement start) {
 				if ("div".equals(start.getName())) {
 					evtMgr.data(new Data(1, "data", mockNodeManager.getDelegate()));
 				}
 			}
-			
-			public void onEndElement(EndElement end) { }
 		});
 		
 		parse("<div></div>");
@@ -239,17 +234,12 @@ public class DefaultParserTest extends ParsingTest {
 		
 		evtMgr.registerListener(parser);
 		
-		parser.registerListener(new NodeListener() {
-			
-			public void onText(Text text) { }
-			
+		parser.registerListener(new OnStartElementListener() {
 			public void onStartElement(StartElement start) {
 				if ("div".equals(start.getName())) {
 					evtMgr.dataComplete(new DataComplete());
 				}
 			}
-			
-			public void onEndElement(EndElement end) { }
 		});
 		
 		parse(parser, "<div></div>");

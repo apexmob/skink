@@ -58,6 +58,13 @@ public abstract class NodeManagerTest extends ParsingTest {
 	}
 	
 	@Test
+	public void addNodeListenerThrowsIllegalArgumentException() {
+		thrown.expect(IllegalArgumentException.class);
+		
+		nodeMgr.addNodeListener(null);
+	}
+	
+	@Test
 	public void oneOnStartElementListenerReceivesOneEventWhenAdded() {
 		nodeMgr.addOnStartElementListener(mockListener);
 		

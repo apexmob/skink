@@ -64,17 +64,32 @@ public interface NodeManager {
 	 * @param text The Text event to publish.
 	 */
 	public void text(Text text);
-
 	
+	/**
+	 * Add a listener to start receiving Node events of multiple types.
+	 * @param listener The listener to receive Node events.
+	 */
+	public void addNodeListener(NodeListener listener);
+	
+	/**
+	 * Remove a listener from receiving Node events of multiple types.
+	 * @param listener The listener that will no longer receive the events. 
+	 * @return True if the listener was present and removed, otherwise false.
+	 */
+	public boolean removeNodeListener(NodeListener listener);
+
+	//TODO remove
 	/**
 	 * Register a new listener to start receiving node events.
 	 * @param listener The listener that will receive the events. 
 	 */
+	@Deprecated
 	public void registerListener(NodeListener listener);
 	
 	/**
 	 * De-register a listener from receiving node events.
 	 * @param listener The listener that will no longer receive the events. 
 	 */
+	@Deprecated
 	public void deregisterListener(NodeListener listener);
 }

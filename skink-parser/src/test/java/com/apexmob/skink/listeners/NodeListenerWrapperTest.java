@@ -98,27 +98,19 @@ public class NodeListenerWrapperTest extends ParsingTest {
 	
 	@Test
 	public void removeListenerReturnsFalseWhenNoChangeMade() {
-		assertFalse(listener.removeListener(null));
 		assertFalse(listener.removeListener(mock2));
+	}
+	
+	@Test
+	public void removeListenerThrowsIllegalArgumentExceptionWhenListenerIsNull() {
+		thrown.expect(IllegalArgumentException.class);
+		
+		listener.removeListener(null);
 	}
 	
 	@Test
 	public void removeListenerReturnsTrueWhenAChangeIsMade() {
 		assertTrue(listener.removeListener(mock1));
-	}
-	
-	@Test
-	public void removeListenerRemovesTheListener() {
-		assertEquals(1, listener.getListeners().size());
-		assertTrue(listener.removeListener(mock1));
-		assertEquals(0, listener.getListeners().size());
-	}
-	
-	@Test
-	public void removeListenerDoesNotRemoveTheListenerWhenNoChangeIsMade() {
-		assertEquals(1, listener.getListeners().size());
-		listener.removeListener(mock2);
-		assertEquals(1, listener.getListeners().size());
 	}
 	
 	@Test

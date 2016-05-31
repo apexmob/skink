@@ -16,7 +16,6 @@ import com.apexmob.skink.Data;
 import com.apexmob.skink.EndElement;
 import com.apexmob.skink.MockDataEventManager;
 import com.apexmob.skink.MockNodeListener;
-import com.apexmob.skink.NodeListener;
 import com.apexmob.skink.ParsingTest;
 import com.apexmob.skink.StartElement;
 import com.apexmob.skink.Text;
@@ -67,7 +66,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	
 	@Test
 	public void noRulesPassesEverythingThru() {
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 				.addListener(mock1)
 				.build();
 		
@@ -82,7 +81,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	
 	@Test
 	public void includeElementRulePassesEverythingThru() {
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 				.addTagRule(tagRule1)
 				.addListener(mock1)
 				.build();
@@ -100,7 +99,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	
 	@Test
 	public void excludeElementRulePassesNothingThru() {
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 				.addTagRule(tagRule1)
 				.addListener(mock1)
 				.build();
@@ -118,7 +117,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	
 	@Test
 	public void includeTextRulePassesEverythingThru() {
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 				.addTextRule(textRule1)
 				.addListener(mock1)
 				.build();
@@ -136,7 +135,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	
 	@Test
 	public void excludeTextRulePassesOnlyElementsThru() {
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 				.addTextRule(textRule1)
 				.addListener(mock1)
 				.build();
@@ -154,7 +153,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	
 	@Test
 	public void includeElementRulesPassesEverythingThru() {
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 				.addTagRule(tagRule1)
 				.addTagRule(tagRule2)
 				.addListener(mock1)
@@ -174,7 +173,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	
 	@Test
 	public void mixedElementRulesPassesNothingThru() {
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 				.addTagRule(tagRule1)
 				.addTagRule(tagRule2)
 				.addListener(mock1)
@@ -194,7 +193,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	
 	@Test
 	public void includeTextRulesPassesEverythingThru() {
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 				.addTextRule(textRule1)
 				.addTextRule(textRule2)
 				.addListener(mock1)
@@ -214,7 +213,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	
 	@Test
 	public void mixedTextRulesPassesOnlyElementsThru() {
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 				.addTextRule(textRule1)
 				.addTextRule(textRule2)
 				.addListener(mock1)
@@ -234,7 +233,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	
 	@Test
 	public void childAddsSecondLayerElementFilter() {
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 				.addTagRule(tagRule1)
 				.addListener(mock1)
 				.addChildListener()
@@ -264,7 +263,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	
 	@Test
 	public void childAddsSecondLayerTextFilter() {
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 				.addTextRule(textRule1)
 				.addListener(mock1)
 				.addChildListener()
@@ -297,7 +296,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 
 	@Test
 	public void canAddSibling() {
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 				.addTagRule(tagRule1)
 				.addListener(mock1)
 				.addChildListener()
@@ -337,7 +336,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	
 	@Test
 	public void filterToAllElementsWithNameWorks() {
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 				.filterToAllTagsWithName("span")
 				.addListener(mock1)
 				.build();
@@ -355,7 +354,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	
 	@Test
 	public void filterToAllElementsWithAttributeEqualsWorks() {
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 				.filterToAllTagsWithAttribute("a", "b")
 				.addListener(mock1)
 				.build();
@@ -386,7 +385,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 		NodeListenerWrapper wrapper = new NodeListenerWrapper();
 		wrapper.addListener(mock1);
 		
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 			.addChildListener(wrapper)
 			.build();
 		
@@ -410,7 +409,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 		NodeListenerWrapper wrapper = new NodeListenerWrapper();
 		wrapper.addListener(mock1);
 		
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 			.addChildListener(wrapper)
 				.addTagRule(tagRule1)
 				.addListener(mock2)
@@ -436,7 +435,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	public void readTextSendDataReadEventWithId() {
 		MockDataEventManager mockEvtMgr = new MockDataEventManager();
 		
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 			.setDataEventManager(mockEvtMgr)
 			.readText(1)
 			.build();
@@ -459,7 +458,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	public void readAttributeSendDataReadEventWithId() {
 		MockDataEventManager mockEvtMgr = new MockDataEventManager();
 		
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 			.setDataEventManager(mockEvtMgr)
 			.readAttribute(1, "a")
 			.build();
@@ -550,7 +549,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	public void manageObjectLifecyleAddsListenerCorrectly() {
 		MockDataEventManager evtMgr = new MockDataEventManager();
 		
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 				.setDataEventManager(evtMgr)
 				.manageObjectLifecyle(1, 2)
 				.build();
@@ -575,7 +574,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	
 	@Test
 	public void filterToElementWithIndexWorksOnFirstIndex() {
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 			.filterToTagWithIndex(1)
 			.addListener(mock1)
 			.build();
@@ -595,7 +594,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	
 	@Test
 	public void filterToElementWithIndexWorksOnNonFirstIndex() {
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 				.filterToTagWithIndex(2)
 				.addListener(mock1)
 				.build();
@@ -615,7 +614,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	
 	@Test
 	public void filterToElementsBetweenIndexesWorksOnFirstIndex() {
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 				.filterToTagsBetweenIndexes(1, 2)
 				.addListener(mock1)
 				.build();
@@ -642,7 +641,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	
 	@Test
 	public void filterToElementsBetweenIndexesWorksOnNonFirstIndex() {
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 				.filterToTagsBetweenIndexes(2, 3)
 				.addListener(mock1)
 				.build();
@@ -678,7 +677,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	public void findWithinTextFindsText() {
 		MockDataEventManager evtMgr = new MockDataEventManager();
 		
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 			.setDataEventManager(evtMgr)
 			.findWithinText(1, Pattern.compile("(es)"))
 			.build();
@@ -697,7 +696,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	public void findWithinTextDoesntFindText() {
 		MockDataEventManager evtMgr = new MockDataEventManager();
 		
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 			.setDataEventManager(evtMgr)
 			.findWithinText(1, Pattern.compile("(es)"))
 			.build();
@@ -720,7 +719,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	public void findWithinAttributeFindsText() {
 		MockDataEventManager evtMgr = new MockDataEventManager();
 		
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 			.setDataEventManager(evtMgr)
 			.findWithinAttribute(1, "a", Pattern.compile("(es)"))
 			.build();
@@ -738,7 +737,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	public void findWithinAttributeDoesntFindText() {
 		MockDataEventManager evtMgr = new MockDataEventManager();
 		
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 			.setDataEventManager(evtMgr)
 			.findWithinAttribute(1, "a", Pattern.compile("(es)"))
 			.build();
@@ -760,7 +759,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	public void matchWithinTextFindsText() {
 		MockDataEventManager evtMgr = new MockDataEventManager();
 		
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 			.setDataEventManager(evtMgr)
 			.matchWithinText(1, Pattern.compile(".*(es).*"), 1)
 			.build();
@@ -779,7 +778,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	public void matchWithinTextDoesntFindText() {
 		MockDataEventManager evtMgr = new MockDataEventManager();
 		
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 			.setDataEventManager(evtMgr)
 			.matchWithinText(1, Pattern.compile(".*(es).*"), 1)
 			.build();
@@ -802,7 +801,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	public void matchWithinAttributeFindsText() {
 		MockDataEventManager evtMgr = new MockDataEventManager();
 		
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 			.setDataEventManager(evtMgr)
 			.matchWithinAttribute(1, "a", Pattern.compile(".*(es).*"), 1)
 			.build();
@@ -820,7 +819,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	public void matchWithinAttributeDoesntFindText() {
 		MockDataEventManager evtMgr = new MockDataEventManager();
 		
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 			.setDataEventManager(evtMgr)
 			.matchWithinAttribute(1, "a", Pattern.compile(".*(es).*"), 1)
 			.build();
@@ -840,7 +839,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	
 	@Test
 	public void forceElementsClosedClosesNoElements() {
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 			.forceTagsClosed(new String[]{})
 			.addListener(mock1)
 			.build();
@@ -853,7 +852,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	
 	@Test
 	public void forceElementsClosedClosesOneElement() {
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 			.forceTagsClosed(new String[]{"div"})
 			.addListener(mock1)
 			.build();
@@ -869,7 +868,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	
 	@Test
 	public void forceElementsClosedClosesMultipleElements() {
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 			.forceTagsClosed(new String[]{"div", "span"})
 			.addListener(mock1)
 			.build();
@@ -886,7 +885,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	
 	@Test
 	public void forceElementsClosedClosesMultipleOfTheSameElement() {
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 			.forceTagsClosed(new String[]{"div"})
 			.addListener(mock1)
 			.build();
@@ -905,7 +904,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	
 	@Test
 	public void debugDoesNotCauseAnError() {
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 			.debug()
 			.build();
 		
@@ -916,7 +915,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	
 	@Test
 	public void filterToTextMatchingFiltersNonMatchingText() {
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 			.filterToTextMatching(Pattern.compile(".*es.*"))
 			.addListener(mock1)
 			.build();
@@ -932,7 +931,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	
 	@Test
 	public void filterToTextMatchingMatchesMatchingText() {
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 			.filterToTextMatching(Pattern.compile(".*es.*"))
 			.addListener(mock1)
 			.build();
@@ -949,7 +948,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	
 	@Test
 	public void filterToAllElementsWithAttributeContainingFiltersNonMatchingAttributeText() {
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 			.filterToAllTagsWithAttributeContaining("a", "es")
 			.addListener(mock1)
 			.build();
@@ -962,7 +961,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	
 	@Test
 	public void filterToAllElementsWithAttributeContainingMatchesAttributeText() {
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 			.filterToAllTagsWithAttributeContaining("a", "es")
 			.addListener(mock1)
 			.build();
@@ -984,7 +983,7 @@ public class NodeListenerBuilderTest extends ParsingTest {
 	
 	@Test
 	public void setPropagationPolicyAltersPropagation() {
-		NodeListener listener = NodeListenerBuilder.builder()
+		RuleBasedAndFilteringNodeListener listener = (RuleBasedAndFilteringNodeListener)NodeListenerBuilder.builder()
 			.setPropagationPolicy(PropagationPolicy.ElementsOnly)
 			.addListener(mock1)
 			.build();

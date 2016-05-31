@@ -5,8 +5,13 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
+import com.apexmob.skink.DefaultNodeManager;
 import com.apexmob.skink.EndElement;
 import com.apexmob.skink.NodeListener;
+import com.apexmob.skink.NodeManager;
+import com.apexmob.skink.OnEndElementListener;
+import com.apexmob.skink.OnStartElementListener;
+import com.apexmob.skink.OnTextListener;
 import com.apexmob.skink.StartElement;
 import com.apexmob.skink.Text;
 
@@ -14,9 +19,9 @@ import com.apexmob.skink.Text;
  * The NodeListenerWrapper class provides manages a collection of NodeListeners
  * and delegates each node event to each of the listeners for processing.
  */
-public class NodeListenerWrapper extends AbstractNodeListener {
+public class NodeListenerWrapper implements OnStartElementListener, OnEndElementListener, OnTextListener {
 	
-	private final List<NodeListener> listeners = new ArrayList<NodeListener>(); 
+	private final NodeManager nodeManager = new DefaultNodeManager();
 	
 	/**
 	 * Construct a new NodeListenerWrapper with no managed listeners.
@@ -33,7 +38,7 @@ public class NodeListenerWrapper extends AbstractNodeListener {
 		if (listener == null) {
 			throw new IllegalArgumentException("The listener provided is null");
 		}
-		listeners.add(listener);
+		nodeManager.registerListener(listener);
 	}
 	
 	/**
@@ -45,7 +50,9 @@ public class NodeListenerWrapper extends AbstractNodeListener {
 		if (listeners == null) {
 			throw new IllegalArgumentException("The listener collection provided is null");
 		}
-		this.listeners.addAll(listeners);
+		for (NodeListener listener : listeners) {
+			nodeManager.registerListener(listener);
+		}
 	}
 	
 	/**
@@ -57,7 +64,7 @@ public class NodeListenerWrapper extends AbstractNodeListener {
 		if (listener == null) {
 			throw new IllegalArgumentException("The listener provided is null");
 		}
-		listeners.add(listener);
+		nodeManager.addNodeListener(listener);
 	}
 	
 	/**
@@ -67,7 +74,7 @@ public class NodeListenerWrapper extends AbstractNodeListener {
 	 * @return True if the collection of managed listeners is changes, otherwise false.
 	 */
 	public boolean removeListener(NodeListener listener) {
-		return listeners.remove(listener);
+		return nodeManager.removeNodeListener(listener);
 	}
 	
 	/**
@@ -76,9 +83,7 @@ public class NodeListenerWrapper extends AbstractNodeListener {
 	 */
 	@Override
 	public void onStartElement(StartElement start) {
-		for (int i=0; i < listeners.size(); i++) {
-			listeners.get(i).onStartElement(start);
-		}
+		nodeManager.startElement(start);
 	}
 	
 	/**
@@ -87,9 +92,7 @@ public class NodeListenerWrapper extends AbstractNodeListener {
 	 */
 	@Override
 	public void onEndElement(EndElement end) {
-		for (int i=0; i < listeners.size(); i++) {
-			listeners.get(i).onEndElement(end);
-		}
+		nodeManager.endElement(end);
 	}
 	
 	/**
@@ -98,17 +101,12 @@ public class NodeListenerWrapper extends AbstractNodeListener {
 	 */
 	@Override
 	public void onText(Text text) {
-		for (int i=0; i < listeners.size(); i++) {
-			listeners.get(i).onText(text);
-		}
+		nodeManager.text(text);
 	}
 	
-	/**
-	 * Retrieve the current collection of managed listeners.
-	 * @return The collection of managed listeners.
-	 */
-	protected List<NodeListener> getListeners() {
-		return Collections.unmodifiableList(listeners);
+	//TODO
+	protected NodeManager getNodeManager() {
+		return nodeManager;
 	}
 
 }

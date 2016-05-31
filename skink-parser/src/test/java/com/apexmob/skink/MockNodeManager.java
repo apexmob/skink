@@ -43,6 +43,18 @@ public class MockNodeManager implements NodeManager {
 		return false;
 	}
 
+	@Override
+	public void addNodeListener(NodeListener listener) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean removeNodeListener(NodeListener listener) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 	public void startElement(StartElement start) {
 		delegate.onStartElement(start);
 	}

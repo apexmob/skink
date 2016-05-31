@@ -15,6 +15,7 @@ import com.apexmob.skink.Data;
 import com.apexmob.skink.DefaultDataManager;
 import com.apexmob.skink.MockDataEventListener;
 import com.apexmob.skink.NodeListener;
+import com.apexmob.skink.OnStartElementListener;
 import com.apexmob.skink.ParsingTest;
 import com.apexmob.skink.StartElement;
 
@@ -50,7 +51,7 @@ public class FindWithinAttributeListenerTest extends ParsingTest {
 	public void readStartElementSendsPatternedAttributeDataEventWithFieldId() {
 		DataManager mgr = new DefaultDataManager();
 		
-		NodeListener listener = new FindWithinAttributeListener(mgr, 1, "c", Pattern.compile("(es)"));
+		OnStartElementListener listener = new FindWithinAttributeListener(mgr, 1, "c", Pattern.compile("(es)"));
 		StartElement start = buildStartElement("<div a=\"b\" c=\"desk\">");
 		
 		MockDataEventListener dataListener = new MockDataEventListener();
@@ -68,7 +69,7 @@ public class FindWithinAttributeListenerTest extends ParsingTest {
 	public void readNoPatternedData() {
 		DataManager mgr = new DefaultDataManager();
 		
-		NodeListener listener = new FindWithinAttributeListener(mgr, 1, "c", Pattern.compile("(es)"));
+		OnStartElementListener listener = new FindWithinAttributeListener(mgr, 1, "c", Pattern.compile("(es)"));
 		StartElement start = buildStartElement("<div a=\"b\" c=\"abc\">");
 		
 		MockDataEventListener dataListener = new MockDataEventListener();

@@ -1,10 +1,11 @@
 package com.apexmob.skink.data;
 
 import com.apexmob.skink.DataManager;
+import com.apexmob.skink.OnTextListener;
 import com.apexmob.skink.Data;
 import com.apexmob.skink.Text;
 
-public class ReadTextListener extends AbstractDataFieldListener {
+public class ReadTextListener extends AbstractDataFieldListener implements OnTextListener {
 	
 	public ReadTextListener(DataManager manager, int fieldId) {
 		super(manager, fieldId);

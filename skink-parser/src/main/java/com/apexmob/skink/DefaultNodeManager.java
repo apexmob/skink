@@ -150,17 +150,49 @@ public class DefaultNodeManager implements NodeManager {
 	}
 
 	@Override
+	public void addNodeListener(NodeListener listener) {
+		if (listener == null) {
+			throw new IllegalArgumentException("The listener provided is null");
+		}
+		if (listener instanceof OnStartElementListener) {
+			addOnStartElementListener((OnStartElementListener) listener);
+		}
+		if (listener instanceof OnEndElementListener) {
+			addOnEndElementListener((OnEndElementListener) listener);
+		}
+		if (listener instanceof OnTextListener) {
+			addOnTextListener((OnTextListener) listener);
+		}
+	}
+
+	@Override
+	public boolean removeNodeListener(NodeListener listener) {
+		if (listener == null) {
+			throw new IllegalArgumentException("The listener provided is null");
+		}
+		
+		boolean retVal = false;
+		if (listener instanceof OnStartElementListener) {
+			retVal = removeOnStartElementListener((OnStartElementListener) listener) || retVal;
+		}
+		if (listener instanceof OnEndElementListener) {
+			retVal = removeOnEndElementListener((OnEndElementListener) listener) || retVal;
+		}
+		if (listener instanceof OnTextListener) {
+			retVal = removeOnTextListener((OnTextListener) listener) || retVal;
+		}
+		
+		return retVal;
+	}
+
+	@Override
 	public void registerListener(NodeListener listener) {
-		addOnStartElementListener(listener);
-		addOnEndElementListener(listener);
-		addOnTextListener(listener);
+		addNodeListener(listener);
 	}
 
 	@Override
 	public void deregisterListener(NodeListener listener) {
-		removeOnStartElementListener(listener);
-		removeOnEndElementListener(listener);
-		removeOnTextListener(listener);
+		removeNodeListener(listener);
 	}
 
 	//TO BE REMOVED

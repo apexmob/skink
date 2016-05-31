@@ -8,14 +8,13 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import com.apexmob.skink.DataManager;
 import com.apexmob.skink.Data;
+import com.apexmob.skink.DataManager;
 import com.apexmob.skink.DefaultDataManager;
 import com.apexmob.skink.MockDataEventListener;
-import com.apexmob.skink.NodeListener;
+import com.apexmob.skink.OnStartElementListener;
 import com.apexmob.skink.ParsingTest;
 import com.apexmob.skink.StartElement;
-import com.apexmob.skink.data.ReadAttributeListener;
 
 public class ReadAttributeListenerTest extends ParsingTest {
 	
@@ -40,7 +39,7 @@ public class ReadAttributeListenerTest extends ParsingTest {
 	public void readStartElementSendsAttributeDataEventWithFieldId() {
 		DataManager mgr = new DefaultDataManager();
 		
-		NodeListener listener = new ReadAttributeListener(mgr, 1, "c");
+		OnStartElementListener listener = new ReadAttributeListener(mgr, 1, "c");
 		StartElement start = buildStartElement("<div a=\"b\" c=\"d\">");
 		
 		MockDataEventListener dataListener = new MockDataEventListener();
@@ -58,7 +57,7 @@ public class ReadAttributeListenerTest extends ParsingTest {
 	public void readStartElementSendsNoDataWhenAttributeIsMissing() {
 		DataManager mgr = new DefaultDataManager();
 		
-		NodeListener listener = new ReadAttributeListener(mgr, 1, "c");
+		OnStartElementListener listener = new ReadAttributeListener(mgr, 1, "c");
 		StartElement start = buildStartElement("<div a=\"b\">");
 		
 		MockDataEventListener dataListener = new MockDataEventListener();

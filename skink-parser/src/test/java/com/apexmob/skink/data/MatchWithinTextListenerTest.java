@@ -15,6 +15,7 @@ import com.apexmob.skink.Data;
 import com.apexmob.skink.DefaultDataManager;
 import com.apexmob.skink.MockDataEventListener;
 import com.apexmob.skink.NodeListener;
+import com.apexmob.skink.OnTextListener;
 import com.apexmob.skink.ParsingTest;
 import com.apexmob.skink.Text;
 
@@ -48,7 +49,7 @@ public class MatchWithinTextListenerTest extends ParsingTest {
 	public void readTextSendsDataEventWithFieldId() {
 		DataManager mgr = new DefaultDataManager();
 		
-		NodeListener listener = new MatchWithinTextListener(mgr, 1, Pattern.compile(".*(es).*"), 1);
+		OnTextListener listener = new MatchWithinTextListener(mgr, 1, Pattern.compile(".*(es).*"), 1);
 		Text text = buildText("test");
 		
 		MockDataEventListener dataListener = new MockDataEventListener();
@@ -66,7 +67,7 @@ public class MatchWithinTextListenerTest extends ParsingTest {
 	public void readNoPatternedData() {
 		DataManager mgr = new DefaultDataManager();
 		
-		NodeListener listener = new MatchWithinTextListener(mgr, 1, Pattern.compile(".*(es).*"), 1);
+		OnTextListener listener = new MatchWithinTextListener(mgr, 1, Pattern.compile(".*(es).*"), 1);
 		Text text = buildText("abc");
 		
 		MockDataEventListener dataListener = new MockDataEventListener();
@@ -82,7 +83,7 @@ public class MatchWithinTextListenerTest extends ParsingTest {
 	public void readNoPatternedDataFromGroupId() {
 		DataManager mgr = new DefaultDataManager();
 		
-		NodeListener listener = new MatchWithinTextListener(mgr, 1, Pattern.compile(".*(es).*"), 2);
+		OnTextListener listener = new MatchWithinTextListener(mgr, 1, Pattern.compile(".*(es).*"), 2);
 		Text text = buildText("test");
 		
 		MockDataEventListener dataListener = new MockDataEventListener();

@@ -10,11 +10,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import com.apexmob.skink.DataManager;
 import com.apexmob.skink.Data;
+import com.apexmob.skink.DataManager;
 import com.apexmob.skink.DefaultDataManager;
 import com.apexmob.skink.MockDataEventListener;
-import com.apexmob.skink.NodeListener;
+import com.apexmob.skink.OnStartElementListener;
 import com.apexmob.skink.ParsingTest;
 import com.apexmob.skink.StartElement;
 
@@ -55,7 +55,7 @@ public class MatchWithinAttributeListenerTest extends ParsingTest {
 	public void readStartElementSendsPatternedAttributeDataEventWithFieldId() {
 		DataManager mgr = new DefaultDataManager();
 		
-		NodeListener listener = new MatchWithinAttributeListener(mgr, 1, "c", Pattern.compile(".*(es).*"), 1);
+		OnStartElementListener listener = new MatchWithinAttributeListener(mgr, 1, "c", Pattern.compile(".*(es).*"), 1);
 		StartElement start = buildStartElement("<div a=\"b\" c=\"desk\">");
 		
 		MockDataEventListener dataListener = new MockDataEventListener();
@@ -73,7 +73,7 @@ public class MatchWithinAttributeListenerTest extends ParsingTest {
 	public void readNoPatternedData() {
 		DataManager mgr = new DefaultDataManager();
 		
-		NodeListener listener = new MatchWithinAttributeListener(mgr, 1, "c", Pattern.compile(".*(es).*"), 1);
+		OnStartElementListener listener = new MatchWithinAttributeListener(mgr, 1, "c", Pattern.compile(".*(es).*"), 1);
 		StartElement start = buildStartElement("<div a=\"b\" c=\"abc\">");
 		
 		MockDataEventListener dataListener = new MockDataEventListener();
@@ -89,7 +89,7 @@ public class MatchWithinAttributeListenerTest extends ParsingTest {
 	public void readNoPatternedDataFromGroupId() {
 		DataManager mgr = new DefaultDataManager();
 		
-		NodeListener listener = new MatchWithinAttributeListener(mgr, 1, "c", Pattern.compile(".*(es).*"), 2);
+		OnStartElementListener listener = new MatchWithinAttributeListener(mgr, 1, "c", Pattern.compile(".*(es).*"), 2);
 		StartElement start = buildStartElement("<div a=\"b\" c=\"test\">");
 		
 		MockDataEventListener dataListener = new MockDataEventListener();

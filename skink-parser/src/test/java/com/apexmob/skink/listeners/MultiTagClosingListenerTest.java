@@ -51,6 +51,21 @@ public class MultiTagClosingListenerTest extends ParsingTest {
 	}
 	
 	@Test
+	public void addListenerdefaultConstructor() {
+		MultiTagClosingListener listener = new MultiTagClosingListener();
+		
+		MockNodeListener mock = new MockNodeListener();
+		listener.addListener(mock);
+		
+		listener.onStartElement(buildStartElement("<div>"));
+		listener.onEndElement(buildEndElement("</div>"));
+		
+		assertEquals(2, mock.getNodeStack().size());
+		assertStartElement(mock, 0, "div");
+		assertEndElement(mock, 1, "div");
+	}
+	
+	@Test
 	public void constructorRegistersListener() {
 		MockNodeListener mock = new MockNodeListener();
 		
@@ -61,12 +76,6 @@ public class MultiTagClosingListenerTest extends ParsingTest {
 		assertEquals(2, mock.getNodeStack().size());
 		assertStartElement(mock, 0, "div");
 		assertEndElement(mock, 1, "div");
-	}
-	
-	@Test
-	public void constructorWithNoArgsStartsWithZeroChildren() {
-		MultiTagClosingListener listener = new MultiTagClosingListener();
-		assertEquals(0, listener.getListeners().size());
 	}
 	
 	@Test

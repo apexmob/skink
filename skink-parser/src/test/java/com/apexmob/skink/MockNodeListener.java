@@ -5,13 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.apexmob.skink.EndElement;
-import com.apexmob.skink.Node;
-import com.apexmob.skink.NodeListener;
-import com.apexmob.skink.StartElement;
-import com.apexmob.skink.Text;
-
-public class MockNodeListener implements NodeListener {
+public class MockNodeListener implements OnStartElementListener, OnEndElementListener, OnTextListener {
 	
 	public List<String> startElementNames = new ArrayList<String>();
 	public List<String> endElementNames = new ArrayList<String>();

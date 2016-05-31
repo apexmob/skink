@@ -13,6 +13,7 @@ import com.apexmob.skink.Data;
 import com.apexmob.skink.DefaultDataManager;
 import com.apexmob.skink.MockDataEventListener;
 import com.apexmob.skink.NodeListener;
+import com.apexmob.skink.OnTextListener;
 import com.apexmob.skink.ParsingTest;
 import com.apexmob.skink.Text;
 import com.apexmob.skink.data.ReadTextListener;
@@ -32,7 +33,7 @@ public class ReadTextListenerTest extends ParsingTest {
 	public void readTextSendsDataEventWithFieldId() {
 		DataManager mgr = new DefaultDataManager();
 		
-		NodeListener listener = new ReadTextListener(mgr, 1);
+		OnTextListener listener = new ReadTextListener(mgr, 1);
 		Text text = buildText("test");
 		
 		MockDataEventListener dataListener = new MockDataEventListener();

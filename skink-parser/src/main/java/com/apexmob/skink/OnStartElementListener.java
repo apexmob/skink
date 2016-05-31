@@ -3,7 +3,7 @@ package com.apexmob.skink;
 /**
  * An event listener that listens for StartElement events that occur during the processing of a document tree.
  */
-public interface OnStartElementListener {
+public interface OnStartElementListener extends NodeListener {
 	
 	/**
 	 * Perform functionality when a StartElement event occurs.

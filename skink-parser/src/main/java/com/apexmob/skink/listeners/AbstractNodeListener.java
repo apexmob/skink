@@ -2,6 +2,9 @@ package com.apexmob.skink.listeners;
 
 import com.apexmob.skink.EndElement;
 import com.apexmob.skink.NodeListener;
+import com.apexmob.skink.OnEndElementListener;
+import com.apexmob.skink.OnStartElementListener;
+import com.apexmob.skink.OnTextListener;
 import com.apexmob.skink.StartElement;
 import com.apexmob.skink.Text;
 
@@ -10,7 +13,7 @@ import com.apexmob.skink.Text;
  * recommended that all listeners extend it, overriding methods as necessary, to ensure forward
  * compatibility with handling any new node events that might be added.
  */
-public abstract class AbstractNodeListener implements NodeListener {
+public abstract class AbstractNodeListener implements OnStartElementListener, OnEndElementListener, OnTextListener {
 	
 	/**
 	 * Construct a new instance.
